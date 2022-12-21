@@ -36,6 +36,7 @@ class GoRouteInformationProvider extends RouteInformationProvider
     // See https://github.com/flutter/flutter/issues/108142
     SystemNavigator.routeInformationUpdated(
       location: routeInformation.location!,
+      state: routeInformation.state,
       replace: replace,
     );
     _value = routeInformation;
