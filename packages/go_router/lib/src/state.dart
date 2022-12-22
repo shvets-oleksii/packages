@@ -152,6 +152,20 @@ class GoRouterState {
   @override
   int get hashCode => Object.hash(location, subloc, name, path, fullpath,
       params, queryParams, queryParametersAll, extra, error, pageKey);
+
+  ///Helper method to get extra as object of type T, even if it was serialized
+  ///by browsers History Api.
+  T? typedExtra<T>(T Function(Map<String, dynamic> serializedValue)? builder) {
+    if (extra is T) {
+      return extra as T;
+    } else if (extra is Map) {
+      final Map<String, dynamic> serializedExtra =
+          extra! as Map<String, dynamic>;
+      return builder?.call(serializedExtra);
+    } else {
+      throw ArgumentError.value(extra);
+    }
+  }
 }
 
 /// An inherited widget to host a [GoRouterStateRegistry] for the subtree.
